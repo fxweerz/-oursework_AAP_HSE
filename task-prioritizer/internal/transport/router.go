@@ -1,13 +1,19 @@
-package transport
+package router
 
 import (
-	"task-prioritizer/internal/services"
+	"task-prioritizer/internal/handlers"
 
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter() *gin.Engine {
+
 	r := gin.Default()
-	r.GET("/", services.HomePage)
+
+	r.LoadHTMLGlob("static/*")
+
+	r.GET("/", handlers.ListTasks)
+	r.POST("/task", handlers.CreateTask)
+
 	return r
 }

@@ -1,0 +1,24 @@
+<h1>Task Priority System</h1>
+
+<form action="/task" method="POST">
+  <input name="title" placeholder="Название" />
+
+  <input type="date" name="deadline" />
+
+  <label>Важность</label>
+  <input type="number" name="importance" min="1" max="5" />
+
+  <label>Сложность</label>
+  <input type="number" name="difficulty" min="1" max="5" />
+
+  <label>Часы</label>
+  <input type="number" name="hours" />
+
+  <button>Add Task</button>
+</form>
+
+<hr />
+
+{{ range .tasks }}
+<p>{{ .Title }} | Priority: {{ printf "%.2f" .Priority }}</p>
+{{ end }}

@@ -1,26 +1,22 @@
 package db
 
 import (
-	"log"
+	"context"
 	"os"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-
-	"github.com/joho/godotenv"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-var DB *gorm.DB
+var DB *pgxpool.Pool
 
-// подключение к бд | Connect to DataBase
-func Init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+func InitDB() error {
 	dsn := os.Getenv("DATABASE_DSN")
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	pool, err := pgxpool.New(context.Background(), dsn)
 	if err != nil {
-		log.Fatal("Failed to connect to DB: ", err)
+		return err
 	}
+
+	DB = pool
+	return nil
 }

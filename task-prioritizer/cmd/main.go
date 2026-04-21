@@ -1,13 +1,24 @@
 package main
 
 import (
-	"task-prioritizer/internal/transport"
+	"log"
 
-	"task-prioritizer/internal/database"
+	"github.com/joho/godotenv"
+
+	db "task-prioritizer/internal/database"
+	router "task-prioritizer/internal/transport"
 )
 
 func main() {
-	db.Init()
-	r := transport.SetupRouter()
+
+	godotenv.Load()
+
+	err := db.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	r := router.SetupRouter()
+
 	r.Run(":8080")
 }
