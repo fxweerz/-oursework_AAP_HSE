@@ -51,7 +51,7 @@
                 <input
                   type="number"
                   name="importance"
-                  placeholder="Важность"
+                  placeholder="Важность (1-10)"
                   class="form-input"
                   min="1"
                   max="10"
@@ -59,7 +59,7 @@
                 <input
                   type="number"
                   name="difficulty"
-                  placeholder="Сложность"
+                  placeholder="Сложность (1-10)"
                   class="form-input"
                   min="1"
                   max="10"
@@ -67,7 +67,7 @@
                 <input
                   type="number"
                   name="estimated_hours"
-                  placeholder="Часы"
+                  placeholder="Часы на выполнение"
                   class="form-input"
                   min="0"
                   max="1000000"
@@ -114,22 +114,38 @@
                 <h3>{{ .Title }}</h3>
               </div>
               <div class="task-card-info">
-                <p class="task-card-info-text">Deadline: {{ .Deadline }}</p>
-                <p class="task-card-info-text">Importance: {{ .Importance }}</p>
-                <p class="task-card-info-text">Difficulty: {{ .Difficulty }}</p>
-                <p class="task-card-info-text">Hours: {{ .EstimatedHours }}</p>
+                <p class="task-card-info-text">Дедлайн: {{ .Deadline }}</p>
+                <p class="task-card-info-text">Важность: {{ .Importance }}</p>
+                <p class="task-card-info-text">Сложность: {{ .Difficulty }}</p>
+                <p class="task-card-info-text">
+                  Часов на выполнение: {{ .EstimatedHours }}
+                </p>
               </div>
             </div>
             {{ end }}
           </div>
           <div id="taskInfoModal" class="modal">
-            <div class="modal-content">
+            <div class="modal-content task-modal-content">
               <span id="closeTaskInfo">&times;</span>
-              <h3 id="modalTitle"></h3>
-              <p><b>Deadline:</b> <span id="modalDeadline"></span></p>
-              <p><b>Importance:</b> <span id="modalImportance"></span></p>
-              <p><b>Difficulty:</b> <span id="modalDifficulty"></span></p>
-              <p><b>Hours:</b> <span id="modalHours"></span></p>
+              <h3 id="modalTitle" class="modal-title"></h3>
+              <div class="modal-grid">
+                <div class="modal-item">
+                  <span class="label">Дедлайн</span>
+                  <span id="modalDeadline"></span>
+                </div>
+                <div class="modal-item">
+                  <span class="label">Важность</span>
+                  <span id="modalImportance"></span>
+                </div>
+                <div class="modal-item">
+                  <span class="label">Сложность</span>
+                  <span id="modalDifficulty"></span>
+                </div>
+                <div class="modal-item">
+                  <span class="label">Часы</span>
+                  <span id="modalHours"></span>
+                </div>
+              </div>
               <form id="deleteForm" method="POST">
                 <button type="submit" class="delete-button">
                   Удалить задачу

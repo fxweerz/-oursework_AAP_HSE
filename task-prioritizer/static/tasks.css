@@ -5,6 +5,14 @@
   margin-top: 20px;
   gap: 10px;
 }
+.delete-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
 .task-card-header h3 {
   margin: 0;
   white-space: nowrap;
@@ -16,6 +24,50 @@
 .task-card-info p {
   display: flex;
   margin: 0;
+}
+.modal-card-info-text {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: #ffffff;
+  border: 2px solid #1f1f1f;
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+.task-modal-content {
+  width: 420px;
+  border-radius: 25px;
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+.modal-title {
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border: 2px solid #1f1f1f;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+.modal-item .label {
+  font-weight: 600;
+  color: #1f1f1f;
 }
 .task-card-info-text {
   display: flex;
@@ -32,6 +84,16 @@
   column-gap: 0px;
   margin-top: 10px;
   cursor: pointer;
+  transform: scale(1);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(34, 60, 80, 0.15);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+.task-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(34, 60, 80, 0.25);
 }
 .task-card-header {
   display: flex;
