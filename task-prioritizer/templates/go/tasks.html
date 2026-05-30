@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Priority System</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="stylesheet" href="/static/tasks.css" />
+  </head>
+  <body>
+    <!-- ХЕДЕР -->
+    <header class="header">
+      <div class="container">
+        <a href="/">
+          <img
+            class="header_logo"
+            src="/static/pictures/logo1.png"
+            alt="Logo"
+          />
+        </a>
+        <nav class="header_nav">
+          <ul class="header_list">
+            <li><a class="active" href="/tasks">Tasks</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </nav>
+        <div class="header_buttons">
+          <a class="header_button_logout" href="/logout">Log out</a>
+        </div>
+      </div>
+    </header>
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main">
+      <section class="tasks">
+        <div class="container">
+          <button id="openModal" class="modal-button">Создать задачу</button>
+          <div id="taskModal" class="modal">
+            <div class="modal-content">
+              <span id="closeModal">&times;</span>
+              <h2>Создание задачи</h2>
+              <form class="create-form" method="POST" action="/tasks/create">
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Название"
+                  class="form-input"
+                  minlength="1"
+                  maxlength="1000"
+                />
+                <input
+                  type="number"
+                  name="importance"
+                  placeholder="Важность"
+                  class="form-input"
+                  min="1"
+                  max="10"
+                />
+                <input
+                  type="number"
+                  name="difficulty"
+                  placeholder="Сложность"
+                  class="form-input"
+                  min="1"
+                  max="10"
+                />
+                <input
+                  type="number"
+                  name="estimated_hours"
+                  placeholder="Часы"
+                  class="form-input"
+                  min="0"
+                  max="1000000"
+                />
+                <input
+                  type="date"
+                  name="deadline"
+                  class="form-input"
+                  min="{{ .Today }}"
+                />
+                <button class="form-button" type="submit">Создать</button>
+              </form>
+            </div>
+            <script>
+              const modal = document.getElementById("taskModal");
+              const openBtn = document.getElementById("openModal");
+              const closeBtn = document.getElementById("closeModal");
+              openBtn.onclick = () => {
+                modal.style.display = "block";
+              };
+              closeBtn.onclick = () => {
+                modal.style.display = "none";
+              };
+              window.onclick = (event) => {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+              };
+            </script>
+          </div>
+          <div class="tasks-grid">
+            {{ range .tasks }}
+            <div
+              class="task-card"
+              data-id="{{ .ID }}"
+              data-title="{{ .Title }}"
+              data-deadline="{{ .Deadline }}"
+              data-importance="{{ .Importance }}"
+              data-difficulty="{{ .Difficulty }}"
+              data-hours="{{ .EstimatedHours }}"
+              data-priority="{{ .Priority }}"
+            >
+              <div class="task-card-header">
+                <h3>{{ .Title }}</h3>
+              </div>
+              <div class="task-card-info">
+                <p class="task-card-info-text">Deadline: {{ .Deadline }}</p>
+                <p class="task-card-info-text">Importance: {{ .Importance }}</p>
+                <p class="task-card-info-text">Difficulty: {{ .Difficulty }}</p>
+                <p class="task-card-info-text">Hours: {{ .EstimatedHours }}</p>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+          <div id="taskInfoModal" class="modal">
+            <div class="modal-content">
+              <span id="closeTaskInfo">&times;</span>
+              <h3 id="modalTitle"></h3>
+              <p><b>Deadline:</b> <span id="modalDeadline"></span></p>
+              <p><b>Importance:</b> <span id="modalImportance"></span></p>
+              <p><b>Difficulty:</b> <span id="modalDifficulty"></span></p>
+              <p><b>Hours:</b> <span id="modalHours"></span></p>
+              <form id="deleteForm" method="POST">
+                <button type="submit" class="delete-button">
+                  Удалить задачу
+                </button>
+              </form>
+            </div>
+          </div>
+          <script>
+            const infoModal = document.getElementById("taskInfoModal");
+            const closeInfoBtn = document.getElementById("closeTaskInfo");
+            document.querySelectorAll(".task-card").forEach((card) => {
+              card.addEventListener("click", () => {
+                document.getElementById("modalTitle").textContent =
+                  card.dataset.title;
+                document.getElementById("modalDeadline").textContent =
+                  card.dataset.deadline;
+                document.getElementById("modalImportance").textContent =
+                  card.dataset.importance;
+                document.getElementById("modalDifficulty").textContent =
+                  card.dataset.difficulty;
+                document.getElementById("modalHours").textContent =
+                  card.dataset.hours;
+                document.getElementById("deleteForm").action =
+                  `/tasks/delete/${card.dataset.id}`;
+                infoModal.style.display = "block";
+              });
+            });
+            closeInfoBtn.onclick = () => {
+              infoModal.style.display = "none";
+            };
+            window.addEventListener("click", (e) => {
+              if (e.target === infoModal) {
+                infoModal.style.display = "none";
+              }
+            });
+          </script>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

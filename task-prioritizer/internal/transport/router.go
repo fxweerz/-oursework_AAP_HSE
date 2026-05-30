@@ -10,10 +10,13 @@ func SetupRouter() *gin.Engine {
 
 	r := gin.Default()
 
-	r.LoadHTMLGlob("static/*")
+	r.LoadHTMLGlob("templates/go/*")
+	r.Static("/static", "static")
 
-	r.GET("/", handlers.ListTasks)
-	r.POST("/task", handlers.CreateTask)
+	r.GET("/", handlers.Welcome)
+	r.GET("/tasks", handlers.ListTasks)
+	r.POST("/tasks/create", handlers.CreateTask)
+	r.POST("/tasks/delete/:id", handlers.DeleteTask)
 
 	return r
 }

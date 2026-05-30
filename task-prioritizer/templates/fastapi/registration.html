@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block styles %}
+<link rel="stylesheet" href="/static/styles.css" />
+<link rel="stylesheet" href="/static/reg.css" />
+{% endblock %} {% block content %}
+<main class="main">
+  <section class="login">
+    <div class="container">
+      <form id="reg_form" class="reg-form" method="post" action="/register">
+        <h3 class="reg-title">Зарегистрируйте новый аккаунт</h3>
+        <input
+          class="reg-input"
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Имя пользователя"
+          required
+          minlength="3"
+          maxlength="20"
+        />
+        <input
+          class="reg-input"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Пароль"
+          required
+          minlength="6"
+          maxlength="20"
+        />
+        <input
+          class="reg-input"
+          type="password"
+          name="confirm_password"
+          id="confirm_password"
+          placeholder="Повторите пароль"
+          required
+          minlength="6"
+          maxlength="20"
+        />
+        <button id="reg_submit" class="reg-button" type="submit">
+          Зарегистрировать
+        </button>
+      </form>
+      <script>
+        const form = document.getElementById("reg_form");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm_password");
+        form.addEventListener("submit", function (event) {
+          if (password.value !== confirmPassword.value) {
+            event.preventDefault();
+            alert("Пароли не совпадают!");
+          }
+        });
+      </script>
+    </div>
+  </section>
+</main>
+{% endblock %}

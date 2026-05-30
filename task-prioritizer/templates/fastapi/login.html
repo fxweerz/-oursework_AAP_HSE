@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block styles %}
+<link rel="stylesheet" href="/static/styles.css" />
+<link rel="stylesheet" href="/static/login.css" />
+{% endblock %} {% block content %}
+<main class="main">
+  <section class="login">
+    <div class="container">
+      <form class="login-form" method="post" action="/login">
+        <h2 class="login-title">Войдите в свой аккаунт</h2>
+        <input
+          class="login-input"
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Имя пользователя"
+          required
+          minlength="3"
+          maxlength="20"
+        />
+        <input
+          class="login-input"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Пароль"
+          required
+          minlength="6"
+          maxlength="20"
+        />
+        <button class="login-button" type="submit">Войти</button>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}
